@@ -14,7 +14,7 @@ process anvio_prodigal {
     tuple val(x), path("${x}-gene-calls.txt"), emit: genecalls
 
   script:
-  x=tsv.getSimpleName()
+  x=contigs.getSimpleName()
   """
   # - The `-L 0` parameter ensures that contigs remain intact and aren't split
     anvi-gen-contigs-database -L 0 -T 6 --project-name ${x} -f ${contigs} -o ${x}.db
