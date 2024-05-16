@@ -13,12 +13,6 @@ workflow PLASX {
   //Create channel contigs from fasta files
   Channel
     .fromPath(params.input)
-    .ifEmpty { exit 1, "Cannot find any files matching: ${params.input}\nNB: Path needs to be enclosed in quotes!" }
-    .map { row -> 
-                def meta= [:]
-                meta.id= row[0]
-                return[meta, row[1]] 
-                }
     .set { ch_contigs }
   
   //Run anvio, predict genes with prodigal

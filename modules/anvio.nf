@@ -8,18 +8,19 @@ process anvio_prodigal {
   maxRetries 3
   
   input:
-    tuple val(x), path(contigs)
+    path(contigs)
   output:
-    tuple val(x), path("${x.id}.db"), emit: contigsdb
-    tuple val(x), path("${x.id}-gene-calls.txt"), emit: genecalls
-  script:
+    tuple val(x), path("${x}.db"), emit: contigsdb
+    tuple val(x), path("${x}-gene-calls.txt"), emit: genecalls
 
+  script:
+  x=tsv.getSimpleName()
   """
   # - The `-L 0` parameter ensures that contigs remain intact and aren't split
-    anvi-gen-contigs-database -L 0 -T 6 --project-name ${x.id} -f ${contigs} -o ${x.id}.db
+    anvi-gen-contigs-database -L 0 -T 6 --project-name ${x} -f ${contigs} -o ${x}.db
 
   # Export gene calls (including amino acid sequences) to text file
-  anvi-export-gene-calls --gene-caller prodigal -c ${x.id}.db -o ${x.id}-gene-calls.txt
+  anvi-export-gene-calls --gene-caller prodigal -c ${x}.db -o ${x}-gene-calls.txt
 
   """
 }
@@ -36,13 +37,13 @@ process anvio_cogpfam {
   input:
     tuple val(x), path(contigs)
   output:
-    tuple val(x), path("${x.id}-cogs-and-pfams.txt "), emit: cogspfams
+    tuple val(x), path("${x}-cogs-and-pfams.txt "), emit: cogspfams
   script:
 
   """
-  anvi-run-ncbi-cogs -T $THREADS --cog-version COG14 --cog-data-dir /home/COG_2014 -c $PREFIX.db
-  anvi-run-pfams -T 6 --pfam-data-dir /home/Pfam_v32 -c ${x.id}.db
+  anvi-run-ncbi-cogs -T 6 --cog-version COG14 --cog-data-dir /home/COG_2014 -c ${contigs}
+  anvi-run-pfams -T 6 --pfam-data-dir /home/Pfam_v32 -c ${contigs}
   #Export functions to text file
-  anvi-export-functions --annotation-sources COG14_FUNCTION,Pfam -c ${x.id}.db -o ${x.id}-cogs-and-pfams.txt
+  anvi-export-functions --annotation-sources COG14_FUNCTION,Pfam -c ${contigs} -o ${x}-cogs-and-pfams.txt
   """
 } 
