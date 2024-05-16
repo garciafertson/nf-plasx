@@ -16,12 +16,11 @@ process anvio_prodigal {
   script:
   x=contigs.getSimpleName()
   """
+  anvi-script-reformat-fasta ${contigs} -o ${x}-fixed.fa -l 1000 --simplify-names
   # - The `-L 0` parameter ensures that contigs remain intact and aren't split
-    anvi-gen-contigs-database -L 0 -T 6 --project-name ${x} -f ${contigs} -o ${x}.db
-
+  anvi-gen-contigs-database -L 0 -T 6 --project-name ${x} -f ${x}-fixed.fa -o ${x}.db
   # Export gene calls (including amino acid sequences) to text file
   anvi-export-gene-calls --gene-caller prodigal -c ${x}.db -o ${x}-gene-calls.txt
-
   """
 }
 
