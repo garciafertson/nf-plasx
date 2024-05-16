@@ -27,7 +27,7 @@ workflow PLASX {
   genecalls = anvio_pileline.genecalls
 
   //Predict COGS and Pfam v32
-  anvio_cogpfam(anvio_contigdb))
+  anvio_cogpfam(anvio_contigdb)
   cogspfams = anvio_cogpfam.out.cogspfams
 
   // Use PlasX to search for search for de nove gene families
