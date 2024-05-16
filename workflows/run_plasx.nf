@@ -35,18 +35,13 @@ workflow PLASX {
   plasxfams=plasx_search_fam.out.fams
 
   //Combine channels anvio_cogs_and_pfams, plasx_search_fams, and anvio_gene_calls by key
-  cogspfams
-  .combine(plasxfams, by: 0)
-  // For every element of this channel, which consists of three values now, the matching key (id),
-  // the first element of the first channel, and the second, keep only the second and the third.
+  cog_plasx= cogspfams.combine(plasxfams, by: 0)
   // .map { id, cog, plasxfam -> [cog, plasxfam] }
-  .set(cog_plasx)
+
   
   //Combine channels genecalls, cog_plasx, and anvio_gene_calls by key
-  cog_plasx
-  .combine(genecalls, by: 0)
+  cog_plasx_genecalls=cog_plasx.combine(genecalls, by: 0)
   //.map { id, cog, plasxfam -> [cog, plasxfam] }
-  .set(cog_plasx_genecalls)
 
   // Use PlasX to predict plasmids
   plasx_predict(cog_plasx_genecalls)
