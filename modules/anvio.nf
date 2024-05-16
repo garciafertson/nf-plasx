@@ -40,7 +40,8 @@ process anvio_cogpfam {
   script:
 
   """
-  anvi-run-pfams -T 6 --pfam-data-dir Pfam_v32 -c ${x.id}.db
+  anvi-run-ncbi-cogs -T $THREADS --cog-version COG14 --cog-data-dir /home/COG_2014 -c $PREFIX.db
+  anvi-run-pfams -T 6 --pfam-data-dir /home/Pfam_v32 -c ${x.id}.db
   #Export functions to text file
   anvi-export-functions --annotation-sources COG14_FUNCTION,Pfam -c ${x.id}.db -o ${x.id}-cogs-and-pfams.txt
   """
