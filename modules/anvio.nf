@@ -29,7 +29,7 @@ process anvio_cogpfam {
   memory '16 GB'
   time '8h'
   maxForks 40
-  container "sysbiojfgg/ancio_cogpfam:v0.1" 
+  container "sysbiojfgg/anvio_cogpfam:v0.1" 
   errorStrategy { sleep(Math.pow(2, task.attempt) * 60 as long); return 'retry' }
   maxRetries 3
   
