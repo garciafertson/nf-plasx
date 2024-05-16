@@ -13,13 +13,13 @@ process plasx_search_fam{
   input:
     tuple val(x), path(genecalls)
   output:
-    tuple val(x), path("${x.id}-de-novo-families.txt"), emit: fams
+    tuple val(x), path("${x}-de-novo-families.txt"), emit: fams
   script:
 
   """
 plasx search_de_novo_families \\
-    -g ${x.id}-gene-calls.txt \\
-    -o ${x.id}-de-novo-families.txt \\
+    -g ${x}-gene-calls.txt \\
+    -o ${x}-de-novo-families.txt \\
     --threads 6 \\
     --splits 32 \\
     --overwrite
@@ -41,13 +41,13 @@ process plasx_predict{
     input:
         tuple val(x), path(cogs), path(fams), path(genecalls)
     output:
-        path ("${x.id}-scores.txt") , emit: scores
+        tuple val(x), path ("${x}-scores.txt") , emit: scores
     script:
     """
     plasx predict \\
     -a ${cogs} ${fams} \\
     -g ${genecalls} \\
-    -o ${x.id}-scores.txt \\
+    -o ${x}-scores.txt \\
     --overwrite
     """
 }
