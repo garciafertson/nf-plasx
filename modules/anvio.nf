@@ -36,7 +36,7 @@ process anvio_cogpfam {
   input:
     tuple val(x), path(contigs)
   output:
-    tuple val(x), path("${x}-cogs-and-pfams.txt "), emit: cogspfams
+    tuple val(x), path("${x}-cogs-and-pfams.txt"), emit: cogspfams
   script:
 
   """
