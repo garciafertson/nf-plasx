@@ -13,8 +13,7 @@ process plasx_search_fam{
   input:
     tuple val(x), path(genecalls)
   output:
-    path ("${x.id}_profiled_metagenome.txt") , emit: profile
-    tuple val(x), path("${x.id}-de-novo-families.txt"), emit: sam
+    tuple val(x), path("${x.id}-de-novo-families.txt"), emit: fams
   script:
 
   """
