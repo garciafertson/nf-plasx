@@ -23,7 +23,7 @@ workflow PLASX {
   
   //Run anvio, predict genes with prodigal
   anvio_prodigal(ch_contigs)
-  anvio_contigdb = anvio_prodigal.out.contigdb
+  anvio_contigdb = anvio_prodigal.out.contigsdb
   genecalls = anvio_pileline.genecalls
 
   //Predict COGS and Pfam v32
