@@ -45,7 +45,7 @@ workflow PLASX {
 
   // Use PlasX to predict plasmids
   plasx_predict(cog_plasx_genecalls)
-  plasx_predict.out.plasmids
+  plasx_predict.out.scores
 
  // Use  MobMess for inferring and visualizing  evolutionary relations among plasmid sequences
  //infer non redundant subset
