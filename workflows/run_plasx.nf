@@ -31,7 +31,7 @@ workflow PLASX {
   cogspfams = anvio_cogpfam.out.cogspfams
 
   // Use PlasX to search for search for de nove gene families
-  plasx_search_fam(anvio_gene_calls)
+  plasx_search_fam(genecalls)
   plasxfams=plasx_search_fam.out.fams
 
   //Combine channels anvio_cogs_and_pfams, plasx_search_fams, and anvio_gene_calls by key
