@@ -57,6 +57,7 @@ process plasx_predict{
     --output ${x}-plasmid.txt
     """
 }
+
 process get_fna_plasmids{
   cpus '1'
   memory '8 GB'
