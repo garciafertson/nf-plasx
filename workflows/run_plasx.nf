@@ -10,7 +10,7 @@ include {plasx_predict} from  "../modules/plasx"
 include {get_fna_plasmids} from  "../modules/plasx"
 include {fna_mashtriangle} from  "../modules/mash"
 include {fna_mcl_clust} from  "../modules/mcl"
-include {fna_get_repr} from  "../modules/mcl"
+include {fna_get_rep} from  "../modules/mcl"
 include {rgi_card} from  "../modules/rgi"
 include {deep_arg} from  "../modules/deeparg"
 
