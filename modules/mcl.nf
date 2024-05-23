@@ -32,14 +32,12 @@ process fna_get_rep{
 
   input:
     path(fna)
-    path(dist)
     path(clust)
   output:
     path("representatives.fna"), emit: representatives
   script:
     """
     get_representatives.py  --plasmids ${fna}  \\
-                --distance  ${dist}  \\
                 --clusters  ${clust}  \\
     """
 }
