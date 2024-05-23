@@ -63,7 +63,7 @@ workflow PLASX {
   fna_mcl_clust(distances)
   clusters=fna_mcl_clust.out.clusters  //publish clusters to draw network
   fna_get_rep(plasmidsfna, clusters)
-  plasmid_representatives = fna_get_repr.out.representatives
+  plasmid_representatives = fna_get_rep.out.representatives
 
   //anotate predicted plasmids with deepARG and rgi card database
   //retrieve annotation as contig and list of detected CARD genes
