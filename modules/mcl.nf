@@ -21,7 +21,7 @@ process mcl_clust{
 }
 
 
-process get_rep_asdb{
+process fna_get_rep{
   //directives
   publishDir "bgc_catalogue", mode: 'copy'
   //conda "pandas"
@@ -31,68 +31,18 @@ process get_rep_asdb{
   time 4.h
 
   input:
-    path(df)
-    path(mashlist)
-    path(distedges)
-    path(clust)
-  output:
-    path("*.tsv"), emit: tsv
-    path("*.list"), emit: list
-  script:
-    """
-    get_representatives.py  --asdbtsv $df \\
-                --allfiles $mashlist \\
-                --distance $distedges \\
-                --clusters $clust \\
-                --ext $params.ext \\
-                --launchDir $launchDir
-    """
-}
-
-
-process get_rep_predicted{
-  //directives
-  publishDir "bgc_catalogue", mode: 'copy'
-  //conda "pandas"
-  //module "python3"
-  container "biopython/biopython"
-  cpus 1
-  time 1.h
-
-  input:
-    path(mashlist)
-    path(distedges)
-    path(clust)
-    output:
-    //path("predictedbgc_representative.tsv"), emit:tsv
-    path("*.list"), emit:list
-
-  script:
-  """
-  get_representatives_frompred.py --allfiles $mashlist \\
-                                --distance $distedges \\
-                                --clusters $clust \\
-  """
-}
-
-
-
-process get_rep_predinasdb{
-  //directives
-  publishDir "bgc_catalogue", mode: 'copy'
-  cpus 1
-  //module "python3"
-  container "biopython/biopython"
-  time 1.h
-
-  input:
+    path(fna)
     path(dist)
+    path(clust)
   output:
-    path("*.list"), emit: list
-    path("*.dict"), emit: dict
+    path("representatives.fna"), emit: representatives
   script:
     """
-    get_representatives_predinasdb.py --paired_distances $dist \\
-                                    --ext $params.ext
+    get_representatives.py  --plasmids ${fna}  \\
+                --distance  ${dist}  \\
+                --clusters  ${clust}  \\
     """
 }
+
+
+
