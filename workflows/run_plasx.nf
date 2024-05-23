@@ -11,8 +11,8 @@ include {get_fna_plasmids} from  "../modules/plasx"
 include {fna_mashtriangle} from  "../modules/mash"
 include {fna_mcl_clust} from  "../modules/mcl"
 include {fna_get_rep} from  "../modules/mcl"
-include {rgi_card} from  "../modules/rgi"
-include {deep_arg} from  "../modules/deeparg"
+include {rgi_card} from  "../modules/arg"
+include {deep_arg} from  "../modules/arg"
 
 
 workflow PLASX {
@@ -62,7 +62,7 @@ workflow PLASX {
   distances = fna_mashtriangle.out.list05
   fna_mcl_clust(distances)
   clusters=fna_mcl_clust.out.clusters  //publish clusters to draw network
-  fna_get_repr(df,asdb_fnafiles, asdb_distances, clusters)
+  fna_get_rep(df,asdb_fnafiles, asdb_distances, clusters)
   plasmid_representatives = fna_get_repr.out.representatives
 
   //anotate predicted plasmids with deepARG and rgi card database
