@@ -3,7 +3,7 @@ process fna_mashtriangle{
   //directives
   container "staphb/mash:2.3"
   cpus 10
-  time 24h
+  time 24.h
 
   input:
     path(fna)
