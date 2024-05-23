@@ -53,7 +53,7 @@ process plasx_predict{
 
     filter_plasmid_scores.py \\
     --plasmids ${x}-scores.txt \\
-    --thresholds ${params.plamsmid_threshold} \\
+    --threshold ${params.plamsmid_threshold} \\
     --output ${x}-plasmid.txt
     """
 }
