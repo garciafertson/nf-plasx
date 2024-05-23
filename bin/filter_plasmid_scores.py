@@ -14,7 +14,9 @@ parser.add_argument("--output", required=True, metavar='FILE')
 args=parser.parse_args()
 
 #read plasmid scores
-df=pd.read_csv(args.plasmids, sep="\t", header=None)
+df=pd.read_csv(args.plasmids, sep="\t", header=0)
 df.columns=["plasmid", "score"]
+#convert score column to float
+df["score"]=df["score"].astype(float)
 df=df[df["score"]>float(args.threshold)]
 df.to_csv( args.output, sep="\t", header=False, index=False)
