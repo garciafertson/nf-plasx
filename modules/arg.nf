@@ -13,7 +13,7 @@ process rgi_card {
   output:
     path("rgi_predicted_ARG.txt")
 
-  script
+  script:
   """
   rgi main --input_sequence ${plasmids} \\
            --output_file predicted_ARG.txt \\
@@ -39,7 +39,7 @@ process deep_arg{
     output:
         path("deepARG_output.ARG")
     
-    script
+    script:
     """
     deeparg predict \\
     --model LS \\
