@@ -1,6 +1,8 @@
+#!/usr/bin/env python3
+
 #This script get the the contigs sequences and plamids scores
 #returns the fasta sequences of the plasmids
-#!/usr/bin/env python3
+
 import pandas as pd
 import re
 import sys, os

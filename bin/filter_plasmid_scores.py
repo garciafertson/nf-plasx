@@ -1,5 +1,6 @@
-#This script reads the plasx score and only keeps the plasmids with a score above a the input threshold
 #!/usr/bin/env python3
+# This script reads the plasx score and only keeps the plasmids with a score above a the input threshold
+
 import pandas as pd
 import re
 import sys, os
