@@ -62,7 +62,7 @@ workflow PLASX {
   distances = fna_mashtriangle.out.list05
   fna_mcl_clust(distances)
   clusters=fna_mcl_clust.out.clusters  //publish clusters to draw network
-  fna_get_rep(df,asdb_fnafiles, asdb_distances, clusters)
+  fna_get_rep(plasmidsfna, clusters)
   plasmid_representatives = fna_get_repr.out.representatives
 
   //anotate predicted plasmids with deepARG and rgi card database
