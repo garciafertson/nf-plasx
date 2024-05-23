@@ -53,7 +53,7 @@ workflow PLASX {
   // Create database of predicted plasmids
   // Combine predicted contigs
   get_fna_plasmids(allcontigfna, plasmidsscores)
-  plasmidsfna = filter_fna_plasmids.out.plasmidsfna
+  plasmidsfna = get_fna_plasmids.out.plasmidsfna
 
   // Dereplicate plasmids using mash, 
   // cluster using mcl 
