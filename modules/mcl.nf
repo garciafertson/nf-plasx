@@ -1,4 +1,4 @@
-process mcl_clust{
+process fna_mcl_clust{
   //directives
   //module "mcl"
   container "sysbiojfgg/mcl:v0.1"
