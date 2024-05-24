@@ -53,7 +53,7 @@ workflow PLASX {
   // Create database of predicted plasmids
   // Combine predicted contigs
   contig_plasmidscore=contig_fixname.combine(plasmidsscores, by: 0)
-  get_fna_plasmids(allcontigfna, plasmidsscores)
+  get_fna_plasmids(contig_plasmidscore)
   plasmidsfna = get_fna_plasmids.out.plasmidsfna.collect()
 
   // Dereplicate plasmids using mash, 
