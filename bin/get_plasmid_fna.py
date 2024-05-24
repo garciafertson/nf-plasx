@@ -18,7 +18,7 @@ parser.add_argument("--output", required=True, metavar='FILE')
 args=parser.parse_args()
 
 #read plasmid scores, the file has two columns, contig and score
-df=pd.read_csv(args.plasmids, sep="\t", header=0)
+df=pd.read_csv(args.plasmids, sep="\t", header=None, names=["contig", "score"])
 #drop rows where contig column equals to 'contig'
 df=df.loc[df["contig"]!="contig",:]
 #read contigs
