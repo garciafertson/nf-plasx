@@ -4,6 +4,7 @@ process fna_mashtriangle{
   container "staphb/mash:2.3"
   cpus 10
   time 24.h
+  publishDir "plasx_prediction/mash_distances", mode: "copy"
 
   input:
     path(fna)
