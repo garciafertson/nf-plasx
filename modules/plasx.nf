@@ -41,7 +41,7 @@ process plasx_predict{
     input:
         tuple val(x), path(cogs), path(fams), path(genecalls)
     output:
-        tuple val(x), path ("${x}-plasmid.txt") , emit: scores
+        path ("${x}-plasmid.txt") , emit: scores
     script:
     
     """
@@ -64,8 +64,8 @@ process get_fna_plasmids{
   time '1h'
   //maxForks 4
   container "biopython/biopython"
-  errorStrategy { sleep(Math.pow(2, task.attempt) * 60 as long); return 'retry' }
-  maxRetries 3
+  //errorStrategy { sleep(Math.pow(2, task.attempt) * 60 as long); return 'retry' }
+  maxRetries 2
   
   input:
     path(allcontigfna)

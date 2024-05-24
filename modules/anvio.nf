@@ -11,9 +11,9 @@ process anvio_prodigal {
     path(contigs)
   output:
     tuple val(x), path("${x}.db"), emit: contigsdb
-    tuple val(x), path("${x}-fixed.fa"), emit: fna
     tuple val(x), path("${x}-gene-calls.txt"), emit: genecalls
-
+    path("${x}-fixed.fa"), emit: fna
+  
   script:
   x=contigs.getSimpleName()
   """
