@@ -61,11 +61,12 @@ workflow PLASX {
   // get representative sequences (longest sequence in cluster)
   fna_mashtriangle(plasmidsfna)
   distances = fna_mashtriangle.out.list05
+  allplasmids = fna_mashtriangle.out.allplasmids
 
   fna_mcl_clust(distances)
   clusters=fna_mcl_clust.out.clusters  //publish clusters to draw network
 
-  fna_get_rep(plasmidsfna, clusters)
+  fna_get_rep(allplasmids, clusters)
   plasmid_representatives = fna_get_rep.out.representatives
 
   //anotate predicted contigs with deepARG and rgi card database
