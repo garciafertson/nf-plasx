@@ -13,10 +13,8 @@ process fna_mashtriangle{
   script:
     """
     mash triangle -p 10 \\
-    -i -E ${fna} > plasmids.edgelist\\
-    awk '{if (\$3 < $params.mashdistance) print \$1,\$2,\$3}' \\
-    plasmids.edgelist > plasmid_0.05.list
+    -i -E ${fna} > plasmids.edgelist
+
+    awk '{if (\$3 < $params.mashdistance) print \$1,\$2,\$3}' plasmids.edgelist > plasmid_0.05.list
     """
 }
-
-
