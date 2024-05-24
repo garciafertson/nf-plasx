@@ -8,12 +8,12 @@ process fna_mashtriangle{
   input:
     path(fna)
   output:
-    path("plasmid.edgelist"), emit: edgelist
+    path("plasmids.edgelist"), emit: edgelist
     path("plasmid_0.05.list"), emit: list05
   script:
     """
     mash triangle -p 10 \\
-    -i -E ${fna} > plasmids.edgelist
+    -i -E ${fna} -k 19 > plasmids.edgelist
 
     awk '{if (\$3 < $params.mashdistance) print \$1,\$2,\$3}' plasmids.edgelist > plasmid_0.05.list
     """
