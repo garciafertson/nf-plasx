@@ -41,7 +41,7 @@ process plasx_predict{
     input:
         tuple val(x), path(cogs), path(fams), path(genecalls)
     output:
-        path ("${x}-plasmid.txt") , emit: scores
+        tuple val(x), path ("${x}-plasmid.txt") , emit: scores
     script:
     
     """
