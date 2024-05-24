@@ -70,7 +70,7 @@ workflow PLASX {
 
   //anotate predicted contigs with deepARG and rgi card database
   //retrieve annotation as contig and list of detected CARD genes
-  if (params.runARG) {
+  if (!params.skip_ARG) {
     rgi_card(contig_fixname)
     deep_arg(contig_fixname)
   }
