@@ -26,15 +26,15 @@ workflow PLASX {
   anvio_prodigal(ch_contigs)
   anvio_contigdb = anvio_prodigal.out.contigsdb
   genecalls = anvio_prodigal.out.genecalls
-  allcontigfna = anvio_prodigal.out.fna.collect()
-
-  //Predict COGS and Pfam v32
-  anvio_cogpfam(anvio_contigdb)
-  cogspfams = anvio_cogpfam.out.cogspfams
+  contig_fixname = anvio_prodigal.out.fna
 
   // Use PlasX to search for search for de nove gene families
   plasx_search_fam(genecalls)
   plasxfams=plasx_search_fam.out.fams
+
+  //Predict COGS and Pfam v32
+  anvio_cogpfam(anvio_contigdb)
+  cogspfams = anvio_cogpfam.out.cogspfams
 
   //Combine channels anvio_cogs_and_pfams, plasx_search_fams, and anvio_gene_calls by key
   cog_plasx= cogspfams.combine(plasxfams, by: 0)
@@ -47,28 +47,33 @@ workflow PLASX {
   // Use PlasX to predict plasmids
   // and select  contigs where score of predicted plasmid is above threshold 0.7
   plasx_predict(cog_plasx_genecalls)
-  plasmidsscores = plasx_predict.out.scores.collect()
+  plasmidsscores = plasx_predict.out.scores
 
   //////////////////////////////////////////
   // Create database of predicted plasmids
   // Combine predicted contigs
+  contig_plasmidscore=contig_fixname.combine(plasmidsscores, by: 0)
   get_fna_plasmids(allcontigfna, plasmidsscores)
-  plasmidsfna = get_fna_plasmids.out.plasmidsfna
+  plasmidsfna = get_fna_plasmids.out.plasmidsfna.collect()
 
   // Dereplicate plasmids using mash, 
   // cluster using mcl 
   // get representative sequences (longest sequence in cluster)
   fna_mashtriangle(plasmidsfna)
   distances = fna_mashtriangle.out.list05
+
   fna_mcl_clust(distances)
   clusters=fna_mcl_clust.out.clusters  //publish clusters to draw network
+
   fna_get_rep(plasmidsfna, clusters)
   plasmid_representatives = fna_get_rep.out.representatives
 
-  //anotate predicted plasmids with deepARG and rgi card database
+  //anotate predicted contigs with deepARG and rgi card database
   //retrieve annotation as contig and list of detected CARD genes
-  rgi_card(plasmid_representatives)
-  deep_arg(plasmid_representatives)
+  if (params.runARG) {
+    rgi_card(contig_fixname)
+    deep_arg(contig_fixname)
+  }
   
   //Combine with Plasmid database human samples,
   // 1 Blastn against plasmid database

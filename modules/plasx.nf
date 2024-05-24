@@ -68,19 +68,13 @@ process get_fna_plasmids{
   maxRetries 2
   
   input:
-    path(allcontigfna)
-    path(plasmidsscores)
+    tuple val(x), path(contigfna) , path(plasmidscores)
   output:
-    path("predicted_plasmids.fna"), emit: plasmidsfna
+    path("${x}_predicted_plasmids.fna"), emit: plasmidsfna
   script:
   """
-  #concatenate all contigs
-  cat *-fixed.fa > allcontigs.fna
-  #concatenate all plasmid scores
-  cat *-plasmid.txt > plasmid_scores.txt
-
-  get_plasmid_fna.py --contigs allcontigs.fna \\
-  --plasmids plasmid_scores.txt \\
-  --output predicted_plasmids.fna
+  get_plasmid_fna.py --contigs ${contigfna} \\
+  --plasmids ${plasmidscores} \\
+  --output ${x}_predicted_plasmids.fna
   """
 }

@@ -6,17 +6,17 @@ process rgi_card {
   container "quay.io/biocontainers/rgi:6.0.3--pyha8f3691_0" 
   //errorStrategy { sleep(Math.pow(2, task.attempt) * 60 as long); return 'retry' }
   maxRetries 3
-  publishDir "mge_arg", mode: 'copy'
+  publishDir "arg/rgi", mode: 'copy'
   
   input:
-    path(plasmids)
+    tuple val(x), path(contigs)
   output:
-    path("rgi_predicted_ARG.txt")
+    tuple val(x), path("${x}_rgi_predicted_ARG.txt"), emit: rgi
 
   script:
   """
-  rgi main --input_sequence ${plasmids} \\
-           --output_file predicted_ARG.txt \\
+  rgi main --input_sequence ${contigs} \\
+           --output_file ${x}_rgi_predicted_ARG.txt \\
            --input_type contig --clean \\
            --num_threads 4 --data plasmid \\
            --low_quality \\
@@ -32,25 +32,24 @@ process deep_arg{
     container "gaarangoa/deeparg:latest"
     //container "quay.io/biocontainers/deeparg:1.0--py_0" 
     maxRetries 3
-    publishDir "mge_arg", mode: 'copy'
+    publishDir "arg/deeparg", mode: 'copy'
     
     input:
-        path(plasmids)
+      tuple val(x),  path(contigs)
     output:
-        path("deepARG_output.ARG")
+      tuple val(x),  path("${x}_deepARG_output.ARG"), emit: deeparg
     
     script:
     """
     deeparg predict \\
     --model LS \\
-    -i ${plasmids} \\
-    -o deepARG_output \\
+    -i ${contigs} \\
+    -o ${x}_deepARG_output \\
     --type nucl \\
     --min-prob 0.8 \\
     --arg-alignment-identity 30 \\
     --arg-alignment-evalue 1e-10 \\
     --arg-num-alignments-per-entry 1000 \\
-    # -d /root \\
- 
+    # -d /root 
     """
 }
