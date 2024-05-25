@@ -32,7 +32,7 @@ def main():
             #skip first line
             next(f)
             for line in f:                
-                clusters.append(line.strip().split(' '))
+                clusters.append(line.strip().split('\t'))
         #for each word in line add to repeated set
         for cluster in clusters:
             for word in cluster:
