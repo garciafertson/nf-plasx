@@ -52,7 +52,7 @@ def main():
                     max_key=word
             representatives.add(max_key)
      #print fasta file of all items in representatives set
-        with open('representatives.fasta', 'w') as f:
+        with open('representative_plasmids.fna', 'w') as f:
             for key in representatives:
                 f.write('>'+key+'\n'+str(plasmids[key])+'\n')
     
