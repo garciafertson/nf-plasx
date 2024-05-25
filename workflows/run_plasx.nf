@@ -28,49 +28,51 @@ workflow PLASX {
   genecalls = anvio_prodigal.out.genecalls
   contig_fixname = anvio_prodigal.out.fna
 
-  // Use PlasX to search for search for de nove gene families
-  plasx_search_fam(genecalls)
-  plasxfams=plasx_search_fam.out.fams
+  if (!params.run_plasmid_prediction) {
+    // Use PlasX to search for search for de nove gene families
+    plasx_search_fam(genecalls)
+    plasxfams=plasx_search_fam.out.fams
 
-  //Predict COGS and Pfam v32
-  anvio_cogpfam(anvio_contigdb)
-  cogspfams = anvio_cogpfam.out.cogspfams
+    //Predict COGS and Pfam v32
+    anvio_cogpfam(anvio_contigdb)
+    cogspfams = anvio_cogpfam.out.cogspfams
 
-  //Combine channels anvio_cogs_and_pfams, plasx_search_fams, and anvio_gene_calls by key
-  cog_plasx= cogspfams.combine(plasxfams, by: 0)
-  // .map { id, cog, plasxfam -> [cog, plasxfam] }
-  
-  //Combine channels genecalls, cog_plasx, and anvio_gene_calls by key
-  cog_plasx_genecalls=cog_plasx.combine(genecalls, by: 0)
-  //.map { id, cog, plasxfam -> [cog, plasxfam] }
+    //Combine channels anvio_cogs_and_pfams, plasx_search_fams, and anvio_gene_calls by key
+    cog_plasx= cogspfams.combine(plasxfams, by: 0)
+    // .map { id, cog, plasxfam -> [cog, plasxfam] }
+    
+    //Combine channels genecalls, cog_plasx, and anvio_gene_calls by key
+    cog_plasx_genecalls=cog_plasx.combine(genecalls, by: 0)
+    //.map { id, cog, plasxfam -> [cog, plasxfam] }
 
-  // Use PlasX to predict plasmids
-  // and select  contigs where score of predicted plasmid is above threshold 0.7
-  plasx_predict(cog_plasx_genecalls)
-  plasmidsscores = plasx_predict.out.scores
+    // Use PlasX to predict plasmids
+    // and select  contigs where score of predicted plasmid is above threshold 0.7
+    plasx_predict(cog_plasx_genecalls)
+    plasmidsscores = plasx_predict.out.scores
 
-  //////////////////////////////////////////
-  // Create database of predicted plasmids
-  // Combine predicted contigs
-  contig_plasmidscore=contig_fixname.combine(plasmidsscores, by: 0)
-  get_fna_plasmids(contig_plasmidscore)
-  plasmidsfna = get_fna_plasmids.out.plasmidsfna.collect()
+    //////////////////////////////////////////
+    // Create database of predicted plasmids
+    // Combine predicted contigs
+    contig_plasmidscore=contig_fixname.combine(plasmidsscores, by: 0)
+    get_fna_plasmids(contig_plasmidscore)
+    plasmidsfna = get_fna_plasmids.out.plasmidsfna.collect()
 
-  // Dereplicate plasmids using mash, 
-  // cluster using mcl 
-  // get representative sequences (longest sequence in cluster)
-  fna_mashtriangle(plasmidsfna)
-  distances = fna_mashtriangle.out.list05
-  allplasmids = fna_mashtriangle.out.allplasmids
+    // Dereplicate plasmids using mash, 
+    // cluster using mcl 
+    // get representative sequences (longest sequence in cluster)
+    fna_mashtriangle(plasmidsfna)
+    distances = fna_mashtriangle.out.list05
+    allplasmids = fna_mashtriangle.out.allplasmids
 
-  fna_mcl_clust(distances)
-  clusters=fna_mcl_clust.out.clusters  //publish clusters to draw network
+    fna_mcl_clust(distances)
+    clusters=fna_mcl_clust.out.clusters  //publish clusters to draw network
 
-  fna_get_rep(allplasmids, clusters)
-  plasmid_representatives = fna_get_rep.out.representatives
+    fna_get_rep(allplasmids, clusters)
+    plasmid_representatives = fna_get_rep.out.representatives
+  }
 
-  //anotate predicted contigs with deepARG and rgi card database
-  //retrieve annotation as contig and list of detected CARD genes
+    //anotate predicted contigs with deepARG and rgi card database
+    //retrieve annotation as contig and list of detected CARD genes
   if (!params.skip_ARG) {
     rgi_card(contig_fixname)
     deep_arg(contig_fixname)
