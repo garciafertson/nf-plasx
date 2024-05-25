@@ -34,11 +34,11 @@ process fna_get_rep{
     path(fna)
     path(clust)
   output:
-    path("representatives.fna"), emit: representatives
+    path("representatives_plasmids.fna"), emit: representatives
   script:
     """
     get_representatives.py  --plasmids ${fna}  \\
-                --clusters  ${clust}  \\
+                --clusters  ${clust} 
     """
 }
 

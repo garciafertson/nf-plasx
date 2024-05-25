@@ -59,7 +59,7 @@ def main():
 
     #if cluster is empty then save all plasmids as representatives as fasta file
     else:
-        with open('representatives.fasta', 'w') as f:
+        with open('representative_plasmids.fna', 'w') as f:
             for key, value in plasmids.items():
                 f.write('>'+key+'\n'+str(value)+'\n')
         
