@@ -2,7 +2,7 @@ process fna_mcl_clust{
   //directives
   //module "mcl"
   container "sysbiojfgg/mcl:v0.1"
-  publishDir "plasx_predicition/mcl_clusters", mode: 'copy'
+  publishDir "plasx_prediction/mcl_clusters", mode: 'copy'
   cpus 4
   time 5.h
 
