@@ -5,9 +5,10 @@ import sys, os
 import argparse
 #import seqio from biopython
 from Bio import SeqIO
-
+#Funtcion to test if file is not empty
 def file_is_not_empty(path):
-    return os.stat(path).st_size!=0
+    return os.path.exists(path) and os.path.getsize(path) > 0
+#    return os.stat(path).st_size!=0
 
 def main():
     parser=argparse.ArgumentParser()
@@ -25,9 +26,11 @@ def main():
     #read clusters from mcl
     repeated=set()
     representatives=set()
-    if(file_is_not_empty(args.distance)):
+    if(file_is_not_empty(args.clusters)):
         clusters=[]
         with open(args.clusters) as f:
+            #skip first line
+            next(f)
             for line in f:                
                 clusters.append(line.strip().split(' '))
         #for each word in line add to repeated set
