@@ -28,7 +28,7 @@ workflow PLASX {
   genecalls = anvio_prodigal.out.genecalls
   contig_fixname = anvio_prodigal.out.fna
 
-  if (!params.run_plasmid_prediction) {
+  if (params.run_plasmid_prediction) {
     // Use PlasX to search for search for de nove gene families
     plasx_search_fam(genecalls)
     plasxfams=plasx_search_fam.out.fams
