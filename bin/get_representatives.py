@@ -18,7 +18,7 @@ def main():
 
     #read plasmid fasta sequences and store in dictionary
     plasmids={}
-    for record in SeqIO.parse(args.plasmid, "fasta"):
+    for record in SeqIO.parse(args.plasmids, "fasta"):
         plasmids[record.id]=record.seq
 
     #check whether there exist repeated bgcs contigs
