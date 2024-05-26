@@ -3,7 +3,7 @@ process rgi_card {
   memory '16 GB'
   time '10h'
   maxForks 4
-  container "quay.io/biocontainers/rgi:6.0.3--pyha8f3691_0" 
+  container "quay.io/biocontainers/rgi:6.0.3--pyha8f3691_0"
   //errorStrategy { sleep(Math.pow(2, task.attempt) * 60 as long); return 'retry' }
   maxRetries 3
   publishDir "arg/rgi", mode: 'copy'
@@ -30,7 +30,8 @@ process deep_arg{
     time '10h'
     maxForks 4
     container "gaarangoa/deeparg:latest"
-    //container "quay.io/biocontainers/deeparg:1.0--py_0" 
+    containerOptions "--bind $params.user_home"
+    //container "quay.io/biocontainers/deepargls:1.0--py_0" 
     maxRetries 3
     publishDir "arg/deeparg", mode: 'copy'
     
