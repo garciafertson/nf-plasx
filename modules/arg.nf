@@ -45,6 +45,7 @@ process deep_arg{
     deeparg predict \\
     --model LS \\
     -i ${contigs} \\
+    -d ${params.deeparg_db} \\
     -o ${x}_deepARG_output \\
     --type nucl \\
     --min-prob 0.8 \\
