@@ -21,9 +21,10 @@ process anvio_prodigal {
   anvi-script-reformat-fasta ${contigs} -o ${x}-fixed.fa -l 1000 --simplify-names --prefix ${x}_
   # - The `-L 0` parameter ensures that contigs remain intact and aren't split
   anvi-gen-contigs-database -L 0 -T 6 --project-name ${x} -f ${x}-fixed.fa -o ${x}.db
+
   # Export gene calls (including amino acid sequences) to text file
   anvi-export-gene-calls --gene-caller prodigal -c ${x}.db -o ${x}-gene-calls.txt
-  anvi-get-sequences-for-gene-calls -c ${x}.db -o ${x}-orfs.fa
+  anvi-get-sequences-for-gene-calls -c ${x}.db -o ${x}-orfs.fa --report-extended-deflines
   """
 }
 

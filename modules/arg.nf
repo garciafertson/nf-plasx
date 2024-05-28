@@ -16,7 +16,7 @@ process rgi_card {
   script:
   """
   rgi main --input_sequence ${contigs} \\
-           --output_file ${x}_rgi_predicted_ARG.txt \\
+           --output_file ${x}_rgi_predicted_ARG \\
            --input_type contig --clean \\
            --num_threads 4 --data plasmid \\
            --low_quality \\
