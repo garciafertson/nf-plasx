@@ -47,11 +47,11 @@ process deep_arg{
     -i ${orfs} \\
     -d ${params.deeparg_db} \\
     -o ${x}_deepARG_out \\
-    --type nucl \\
-    --min-prob 0.8 \\
-    --arg-alignment-identity 30 \\
-    --arg-alignment-evalue 1e-10 \\
-    --arg-num-alignments-per-entry 1000 \\
+    --type prot \\
+    #--min-prob 0.8 \\
+    #--arg-alignment-identity 30 \\
+    #--arg-alignment-evalue 1e-10 \\
+    #--arg-num-alignments-per-entry 1000 \\
     # -d /root 
     """
 }
