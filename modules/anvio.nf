@@ -1,7 +1,7 @@
 process anvio_prodigal {
-  cpus '6'
+  cpus '4'
   memory '16 GB'
-  time '8h'
+  time '4h'
   maxForks 40
   container "sysbiojfgg/anvio_cogpfam:v0.1" 
   errorStrategy { sleep(Math.pow(2, task.attempt) * 60 as long); return 'retry' }
@@ -13,6 +13,7 @@ process anvio_prodigal {
     tuple val(x), path("${x}.db"), emit: contigsdb
     tuple val(x), path("${x}-gene-calls.txt"), emit: genecalls
     tuple val(x), path("${x}-fixed.fa"), emit: fna
+    tuple val(x), path("${x}-orfs.fa"), emit: orfs
   
   script:
   x=contigs.getSimpleName()
@@ -22,6 +23,7 @@ process anvio_prodigal {
   anvi-gen-contigs-database -L 0 -T 6 --project-name ${x} -f ${x}-fixed.fa -o ${x}.db
   # Export gene calls (including amino acid sequences) to text file
   anvi-export-gene-calls --gene-caller prodigal -c ${x}.db -o ${x}-gene-calls.txt
+  anvi-get-sequences-for-gene-calls -c ${x}.db -o ${x}-orfs.fa
   """
 }
 

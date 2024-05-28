@@ -36,7 +36,7 @@ process deep_arg{
     publishDir "arg/deeparg", mode: 'copy'
     
     input:
-      tuple val(x),  path(contigs)
+      tuple val(x),  path(orfs)
     output:
       tuple val(x),  path("${x}_deepARG_output.ARG"), emit: deeparg
     
@@ -44,9 +44,9 @@ process deep_arg{
     """
     deeparg predict \\
     --model LS \\
-    -i ${contigs} \\
+    -i ${orfs} \\
     -d ${params.deeparg_db} \\
-    -o ${x}_deepARG_output \\
+    -o ${x}_deepARG_out \\
     --type nucl \\
     --min-prob 0.8 \\
     --arg-alignment-identity 30 \\
