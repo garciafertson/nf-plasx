@@ -38,7 +38,7 @@ process deep_arg{
     input:
       tuple val(x),  path(orfs)
     output:
-      tuple val(x),  path("${x}_deepARG_output.ARG"), emit: deeparg
+      tuple val(x),  path("${x}_deepARG.ARG"), emit: deeparg
     
     script:
     """
@@ -46,7 +46,7 @@ process deep_arg{
     --model LS \\
     -i ${orfs} \\
     -d ${params.deeparg_db} \\
-    -o ${x}_deepARG_out \\
+    -o ${x}_deepARG \\
     --type nucl \\
     --min-prob 0.8 \\
     --arg-alignment-identity 30 \\
