@@ -38,7 +38,7 @@ process deep_arg{
     input:
       tuple val(x),  path(orfs)
     output:
-      tuple val(x),  path("${x}_deepARG.ARG"), emit: deeparg
+      tuple val(x),  path("${x}_deepARG.mapping.ARG"), emit: deeparg
     
     script:
     """
