@@ -49,7 +49,7 @@ process deep_arg{
     -o ${x}_deepARG \\
     --type nucl \\
     --min-prob 0.8 \\
-    --arg-alignment-identity 30 \\
+    --arg-alignment-identity 50 \\
     --arg-alignment-evalue 1e-10 \\
     --arg-num-alignments-per-entry 1000 \\
    
