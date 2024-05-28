@@ -26,8 +26,8 @@ workflow PLASX {
   anvio_prodigal(ch_contigs)
   anvio_contigdb = anvio_prodigal.out.contigsdb
   genecalls = anvio_prodigal.out.genecalls
-  contig_fixname = anvio_prodigal.out.fna
-  orfs = anvio_prodigal.out.orfs
+  contigs = anvio_prodigal.out.fna
+  //orfs = anvio_prodigal.out.orfs
 
   if (params.run_plasmid_prediction) {
     // Use PlasX to search for search for de nove gene families
@@ -75,8 +75,8 @@ workflow PLASX {
     //anotate predicted contigs with deepARG and rgi card database
     //retrieve annotation as contig and list of detected CARD genes
   if (!params.skip_ARG) {
-    rgi_card(orfs)
-    deep_arg(orfs)
+    rgi_card(contigs)
+    deep_arg(contigs)
   }
   
   //Combine with Plasmid database human samples,

@@ -13,7 +13,7 @@ process anvio_prodigal {
     tuple val(x), path("${x}.db"), emit: contigsdb
     tuple val(x), path("${x}-gene-calls.txt"), emit: genecalls
     tuple val(x), path("${x}-fixed.fa"), emit: fna
-    tuple val(x), path("${x}-orfs.faa"), emit: orfs
+    //tuple val(x), path("${x}-orfs.faa"), emit: orfs
   
   script:
   x=contigs.getSimpleName()
@@ -25,8 +25,8 @@ process anvio_prodigal {
   # Export gene calls (including amino acid sequences) to text file
   anvi-export-gene-calls --gene-caller prodigal -c ${x}.db -o ${x}-gene-calls.txt
 
-  anvi-get-sequences-for-gene-calls -c ${x}.db -o ${x}-orfs.faa \\
-  --report-extended-deflines --get-aa-sequences
+  #anvi-get-sequences-for-gene-calls -c ${x}.db -o ${x}-orfs.faa \\
+  #--report-extended-deflines
   """
 }
 

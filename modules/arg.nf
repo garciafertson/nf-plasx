@@ -1,7 +1,7 @@
 process rgi_card {
   cpus '4'
   memory '16 GB'
-  time '10h'
+  time '8h'
   maxForks 4
   container "quay.io/biocontainers/rgi:6.0.3--pyha8f3691_0"
   //errorStrategy { sleep(Math.pow(2, task.attempt) * 60 as long); return 'retry' }
@@ -25,12 +25,12 @@ process rgi_card {
 }
 
 process deep_arg{
-    cpus '4'
-    memory '16 GB'
-    time '10h'
+    cpus '2'
+    memory '12 GB'
+    time '8h'
     maxForks 4
     container "gaarangoa/deeparg:latest"
-    containerOptions "--bind $params.user_home"
+    containerOptions "--bind ${params.deeparg_db}"
     //container "quay.io/biocontainers/deepargls:1.0--py_0" 
     maxRetries 3
     publishDir "arg/deeparg", mode: 'copy'
@@ -47,11 +47,11 @@ process deep_arg{
     -i ${orfs} \\
     -d ${params.deeparg_db} \\
     -o ${x}_deepARG_out \\
-    --type prot \\
-    #--min-prob 0.8 \\
-    #--arg-alignment-identity 30 \\
-    #--arg-alignment-evalue 1e-10 \\
-    #--arg-num-alignments-per-entry 1000 \\
-    # -d /root 
+    --type nucl \\
+    --min-prob 0.8 \\
+    --arg-alignment-identity 30 \\
+    --arg-alignment-evalue 1e-10 \\
+    --arg-num-alignments-per-entry 1000 \\
+   
     """
 }
