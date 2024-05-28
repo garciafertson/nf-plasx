@@ -13,7 +13,7 @@ process anvio_prodigal {
     tuple val(x), path("${x}.db"), emit: contigsdb
     tuple val(x), path("${x}-gene-calls.txt"), emit: genecalls
     tuple val(x), path("${x}-fixed.fa"), emit: fna
-    tuple val(x), path("${x}-orfs.faa"), emit: orfs
+    tuple val(x), path("${x}-orfs.fna"), emit: orfs
   
   script:
   x=contigs.getSimpleName()
