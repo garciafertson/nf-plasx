@@ -30,7 +30,7 @@ process deep_arg{
     time '8h'
     maxForks 4
     container "gaarangoa/deeparg:latest"
-    containerOptions "--bind ${params.deeparg_db}"
+    containerOptions "--bind ${params.deeparg_db},${params.user_home}"
     //container "quay.io/biocontainers/deepargls:1.0--py_0" 
     maxRetries 3
     publishDir "arg/deeparg", mode: 'copy'
