@@ -55,3 +55,26 @@ process deep_arg{
    
     """
 }
+
+process get_deeparg_fna{
+    cpus '1'
+    memory '8 GB'
+    time '4h'
+    maxForks 50
+    container "sysbiojfgg/anvio_cogpfam:v0.1"
+    containerOptions "--bind ${params.deeparg_db},${params.user_home}"
+    maxRetries 3
+    publishDir "arg/deeparg", mode: 'copy'
+    
+    input:
+      tuple val(x),  path(deeparg_table), path(orfs)
+    output:
+      tuple val(x),  path("${x}_deepARG.fna"), emit: deeparg
+    
+    script:
+    """
+    getfna_deeparg.py --deepARG ${deeparg_table} \\
+          --orfs ${orfs} \\
+          --output ${x}_deepARG.fna
+    """
+}

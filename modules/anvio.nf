@@ -56,3 +56,38 @@ process anvio_cogpfam {
   anvi-export-functions --annotation-sources COG14_FUNCTION,Pfam -c ${contigs} -o ${x}-cogs-and-pfams.txt
   """
 } 
+
+process anvio_hmm_mge {
+cpus '6'
+memory '8 GB'
+time '4h'
+input:
+tuple val(x), path(contigsdb)
+
+output:
+tuple val(x), path("DOMTABLE_${x}.txt"), emit: hmm
+tuple val(x), path("${x}_REC_contigs.fa"), emit: contig_fna
+
+script:
+"""
+# Detect Recombinanses using HMM profiles
+anvi-run-hmms -c ${contigsdb} \
+              -H ${params.hmm_db} \
+              --num-threads 6 \
+              --hmmer-output-dir hmm-output \
+              --domain-hits-table
+
+# Filter HMM hits
+anvi-script-filter-hmm-hits-table -c ${contigs-db} \
+                                  --hmm-source ${params.hmm_db} \
+                                  --domain-hits-table hmm-output/DOMTABLE.txt \
+                                  --target-coverage 0.85
+
+# Get fasta sequences of contigs hits
+anvi-export-contigs -c ${contigs-db} \
+                    -o path/to/${x}_REC_contigs.fa
+
+# mv domain hits to current directory
+mv hmm-output/DOMTABLE.txt ./DOMTABLE_${x}.txt
+"""
+}
