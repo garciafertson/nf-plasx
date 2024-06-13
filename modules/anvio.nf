@@ -37,7 +37,7 @@ process anvio_prodigal {
 process anvio_cogpfam {
   cpus '6'
   memory '16 GB'
-  time '8h'
+  time '4h'
   maxForks 40
   container "sysbiojfgg/anvio_cogpfam:v0.1" 
   errorStrategy { sleep(Math.pow(2, task.attempt) * 60 as long); return 'retry' }
