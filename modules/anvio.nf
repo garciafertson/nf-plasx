@@ -20,7 +20,7 @@ process anvio_prodigal {
   """
   anvi-script-reformat-fasta ${contigs} -o ${x}-fixed.fa -l 1000 --simplify-names --prefix ${x}_
   # - The `-L 0` parameter ensures that contigs remain intact and aren't split
-  anvi-gen-contigs-database -L 0 -T 6 --project-name ${x} -f ${x}-fixed.fa -o ${x}.db
+  anvi-gen-contigs-database -L 0 -T 4 --project-name ${x} -f ${x}-fixed.fa -o ${x}.db
 
   # Export gene calls (including amino acid sequences) to text file
   anvi-export-gene-calls --gene-caller prodigal -c ${x}.db -o ${x}-gene-calls.txt
@@ -80,13 +80,13 @@ anvi-run-hmms -c ${contigsdb} \
               --domain-hits-table
 
 # Filter HMM hits
-anvi-script-filter-hmm-hits-table -c ${contigs-db} \
+anvi-script-filter-hmm-hits-table -c ${contigsdb} \
                                   --hmm-source ${params.hmm_db} \
                                   --domain-hits-table hmm-output/DOMTABLE.txt \
                                   --target-coverage 0.85
 
 # Get fasta sequences of contigs hits
-anvi-export-contigs -c ${contigs-db} \
+anvi-export-contigs -c ${contigsdb} \
                     -o path/to/${x}_REC_contigs.fa
 
 # mv domain hits to current directory
