@@ -83,6 +83,7 @@ anvi-run-hmms -c ${x}_hmm.db \\
 # Filter HMM hits
 anvi-script-filter-hmm-hits-table -c ${x}_hmm.db \\
                   --hmm-profile-dir ${projectDir}/hmm_rec \\
+                  --hmm-source  ${projectDir}/hmm_rec\\
                   --domain-hits-table hmm-output/hmm.domtable \\
                   --model-coverage 0.85
 
