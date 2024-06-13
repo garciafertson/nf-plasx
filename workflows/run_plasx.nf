@@ -1,7 +1,6 @@
 /*
 PLasX: A workflow for the identification of plasmids in metagenomic data
 */
-
 //import modules
 include {anvio_prodigal} from  "../modules/anvio"
 include {anvio_cogpfam} from  "../modules/anvio"
@@ -92,7 +91,6 @@ workflow PLASX {
     */
   }
 
-
   //anotate predicted contigs with deepARG and rgi card database
   //retrieve annotation as contig and list of detected CARD genes
   //ANNOTATE CONTIGS WHERE ARGs ARE DETECTED
@@ -107,7 +105,7 @@ workflow PLASX {
   }
   
   //RUN GENE CATALOGUE
-  if(params.run_genecatalogue) {
+  if(params.run_gene_catalogue) {
     //Build gene catalogue from predicted genes (prodigal) in assembly
     allorfs=orfs.collect()
     gene_catalogue_all(allorfs)
