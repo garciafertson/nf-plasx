@@ -69,7 +69,7 @@ process get_deeparg_fna{
     input:
       tuple val(x),  path(deeparg_table), path(orfs)
     output:
-      tuple val(x),  path("${x}_deepARG.fna"), emit: deeparg
+      tuple val(x),  path("${x}_deepARG.fna"), emit: deepargfna
     
     script:
     """
