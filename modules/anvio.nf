@@ -64,7 +64,7 @@ time '4h'
 input:
 tuple val(x), path(contigsdb)
 container "sysbiojfgg/anvio_cogpfam:v0.1"
-containerOptions "--bind ${projectDir}/hmm_rec:${workDir}"
+containerOptions "--bind ${projectDir}/hmm_rec:${projectDir}/hmm_rec"
 
 output:
 tuple val(x), path("DOMTABLE_${x}.txt"), emit: hmm
@@ -74,14 +74,14 @@ script:
 """
 # Detect Recombinanses using HMM profiles
 anvi-run-hmms -c ${contigsdb} \
-              -H hmm_rec \
+              -H ${projectDir}/hmm_rec \
               --num-threads 6 \
               --hmmer-output-dir hmm-output \
               --domain-hits-table
 
 # Filter HMM hits
 anvi-script-filter-hmm-hits-table -c ${contigsdb} \
-                                  --hmm-source hmm_rec \
+                                  --hmm-source ${projectDir}/hmm_rec \
                                   --domain-hits-table hmm-output/DOMTABLE.txt \
                                   --target-coverage 0.85
 
