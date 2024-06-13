@@ -74,14 +74,14 @@ script:
 """
 # Detect Recombinanses using HMM profiles
 anvi-run-hmms -c ${contigsdb} \
-              -H ${params.hmm_db} \
+              -H hmm_rec \
               --num-threads 6 \
               --hmmer-output-dir hmm-output \
               --domain-hits-table
 
 # Filter HMM hits
 anvi-script-filter-hmm-hits-table -c ${contigsdb} \
-                                  --hmm-source ${params.hmm_db} \
+                                  --hmm-source hmm_rec \
                                   --domain-hits-table hmm-output/DOMTABLE.txt \
                                   --target-coverage 0.85
 
