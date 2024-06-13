@@ -97,7 +97,7 @@ workflow PLASX {
   if (!params.skip_ARG) {
     rgi_card_sample(contigs)
     deep_arg_sample(orfs)
-    deepARG = deep_arg.out.deeparg
+    deepARG = deep_arg_sample.out.deeparg
     arg_orf= deepARG.combine(orfs, by: 0) 
     get_deeparg_fna(arg_orf)
     get_deeparg_fna.out.deepargfna
