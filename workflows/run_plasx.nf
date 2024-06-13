@@ -18,7 +18,7 @@ include {rgi_card} from  "../modules/arg"
 include {deep_arg as deep_arg_sample; deep_arg as deep_arg_catalogue} from  "../modules/arg"
 include {get_deeparg_fna} from  "../modules/arg"
 
-include {gene_catalogue} from  "../modules/gene_catalogue"
+include {gene_catalogue as gene_catalogue_all; gene_catalogue as gene_catalogue_arg} from  "../modules/gene_catalogue"
 include {anvio_hmm_mge} from  "../modules/anvio"
 
 workflow PLASX {
@@ -111,10 +111,10 @@ workflow PLASX {
   if(params.run_genecatalogue) {
     //Build gene catalogue from predicted genes (prodigal) in assembly
     allorfs=orfs.collect()
-    cdhit(allorfs)
+    gene_catalogue_all(allorfs)
     genecatlg= cdhit.out.fna
     //Predict ARG in gene catalogue
-    deep_arg_catalogue(genecatlg)
+    
   }
   //Run hmmsearc againt recombinase for detecting Mobile Genetic Elements
 }
