@@ -33,8 +33,7 @@ workflow PLASX {
   genecalls = anvio_prodigal.out.genecalls
   contigs = anvio_prodigal.out.fna
   orfs = anvio_prodigal.out.orfs
-  aa = anvio_prodigal.out.aa
-
+  
   //RUN MGE PREDICTION
   if (params.run_plasmid_prediction) {
     // Use PlasX to search for search for de nove gene families
