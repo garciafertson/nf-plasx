@@ -73,20 +73,22 @@ tuple val(x), path("${x}_REC_contigs.fa"), emit: contig_fna
 script:
 """
 # Detect Recombinanses using HMM profiles
-anvi-run-hmms -c ${contigsdb} \
-              -H ${projectDir}/hmm_rec \
-              --num-threads 6 \
-              --hmmer-output-dir hmm-output \
+cp ${contigsdb} ${x}_hmm.db
+anvi-run-hmms -c ${x}_hmm.db \\
+              -H ${projectDir}/hmm_rec \\
+              --num-threads 6 \\
+              --hmmer-output-dir hmm-output \\
               --domain-hits-table
 
 # Filter HMM hits
-anvi-script-filter-hmm-hits-table -c ${contigsdb} \
-                                  --hmm-source ${projectDir}/hmm_rec \
-                                  --domain-hits-table hmm-output/DOMTABLE.txt \
-                                  --model-coverage 0.85
+anvi-script-filter-hmm-hits-table -c ${x}_hmm.db \\
+                  --hmm-profile-dir ${projectDir}/hmm_rec \\
+                  --hmm-source ${projectDir}/hmm_rec \\
+                  --domain-hits-table hmm-output/DOMTABLE.txt \\
+                  --model-coverage 0.85
 
 # Get fasta sequences of contigs hits
-anvi-export-contigs -c ${contigsdb} \
+anvi-export-contigs -c ${x}_hmm.db \\
                     -o ${x}_REC_contigs.fa
 
 # mv domain hits to current directory
