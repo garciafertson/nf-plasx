@@ -64,7 +64,7 @@ time '4h'
 input:
 tuple val(x), path(contigsdb)
 container "sysbiojfgg/anvio_cogpfam:v0.1"
-containerOptions "--bind ${projectDir}/hmm_rec"
+containerOptions "--bind ${projectDir}/hmm_rec:${workDir}"
 
 output:
 tuple val(x), path("DOMTABLE_${x}.txt"), emit: hmm
