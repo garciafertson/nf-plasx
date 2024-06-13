@@ -13,7 +13,7 @@ include {fna_mashtriangle as fna_mashtriangle_plasmid; fna_mashtriangle as fna_m
 include {fna_mcl_clust as fna_mcl_clust_plasmid; fna_mcl_clust as fna_mcl_clust_rec} from  "../modules/mcl"
 include {fna_get_rep as fna_get_rep_plasmid; fna_get_rep as fna_get_rep_rec} from  "../modules/mcl"
 
-include {rgi_card} from  "../modules/arg"
+include {rgi_card as rgi_card_sample} from  "../modules/arg"
 include {deep_arg as deep_arg_sample; deep_arg as deep_arg_catalogue} from  "../modules/arg"
 include {get_deeparg_fna} from  "../modules/arg"
 
