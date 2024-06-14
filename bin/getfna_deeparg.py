@@ -12,7 +12,7 @@ from Bio import SeqIO
 #read arguments
 parser=argparse.ArgumentParser()
 parser.add_argument("--deeparg", required=True, metavar='FILE')
-parser.add_argument("--contigs", required=True, metavar='FILE')
+parser.add_argument("--orfs", required=True, metavar='FILE')
 parser.add_argument("--output", required=True, metavar='FILE')
 
 #read deeparg predictions
@@ -24,6 +24,6 @@ for index, row in df.iterrows():
 
 #read contigs fasta file line by line and save fasta sequence where is is in arg_id
 with open(args.output, "w") as out:
-    for record in SeqIO.parse(args.contigs, "fasta"):
+    for record in SeqIO.parse(args.orfs, "fasta"):
         if record.id in arg_id:
             out.write(">"+record.id+"\n"+str(record.seq)+"\n")
