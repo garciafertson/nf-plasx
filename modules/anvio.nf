@@ -81,7 +81,6 @@ anvi-run-hmms -c ${x}_hmm.db \\
               --domain-hits-table
 
 anvi-get-sequences-for-hmm-hits -c ${x}_hmm.db \\
-                    --H ${projectDir}/hmm_rec \\
                     --hmm-source hmm_rec \\
                     -o ${x}_hmmrec.fa
 
