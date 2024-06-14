@@ -73,7 +73,7 @@ process get_deeparg_fna{
     
     script:
     """
-    getfna_deeparg.py --deepARG ${deeparg_table} \\
+    getfna_deeparg.py --deeparg ${deeparg_table} \\
           --orfs ${orfs} \\
           --output ${x}_deepARG.fna
     """
