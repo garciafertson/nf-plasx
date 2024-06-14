@@ -14,7 +14,7 @@ parser=argparse.ArgumentParser()
 parser.add_argument("--deeparg", required=True, metavar='FILE')
 parser.add_argument("--orfs", required=True, metavar='FILE')
 parser.add_argument("--output", required=True, metavar='FILE')
-
+args=parser.parse_args()
 #read deeparg predictions
 #Column 4 has te contig id
 arg_id=set()
