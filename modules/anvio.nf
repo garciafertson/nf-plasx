@@ -67,8 +67,8 @@ container "sysbiojfgg/anvio_cogpfam:v0.1"
 containerOptions "--bind ${projectDir}/hmm_rec:${projectDir}/hmm_rec"
 
 output:
-tuple val(x), path("DOMTABLE_${x}.txt"), emit: hmm
-tuple val(x), path("${x}_REC_contigs.fa"), emit: contig_fna
+tuple val(x), path("${x}_DOMTABLE.txt"), emit: hmm
+tuple val(x), path("${x}_hmmrec.fa"), emit: contig_fna
 
 script:
 """
@@ -95,6 +95,6 @@ anvi-get-sequences-for-hmm-hits -c ${x}_hmm.db \\
 #                    -o ${x}_REC_contigs.fa
 
 # mv domain hits to current directory
-mv hmm-output/hmm.domtable ./DOMTABLE_${x}.txt
+mv hmm-output/hmm.domtable ./${x}_DOMTABLE.txt
 """
 }
