@@ -80,16 +80,20 @@ anvi-run-hmms -c ${x}_hmm.db \\
               --hmmer-output-dir hmm-output \\
               --domain-hits-table
 
-# Filter HMM hits
-anvi-script-filter-hmm-hits-table -c ${x}_hmm.db \\
-                  --hmm-profile-dir ${projectDir}/hmm_rec \\
-                  --hmm-source  hmm_rec\\
-                  --domain-hits-table hmm-output/hmm.domtable \\
-                  --model-coverage 0.85
+anvi-get-sequences-for-hmm-hits -c ${contigsdb} \\
+                    --H ${projectDir}/hmm_rec \\
+                    --hmm-source UpxZ \\
+                    -o UpxZ.fa
 
+# Filter HMM hits
+#anvi-script-filter-hmm-hits-table -c ${x}_hmm.db \\
+#                  --hmm-profile-dir ${projectDir}/hmm_rec \\
+#                  --hmm-source  hmm_rec\\
+#                  --domain-hits-table hmm-output/hmm.domtable \\
+#                  --model-coverage 0.85
 # Get fasta sequences of contigs hits
-anvi-export-contigs -c ${x}_hmm.db \\
-                    -o ${x}_REC_contigs.fa
+#anvi-export-contigs -c ${x}_hmm.db \\
+#                    -o ${x}_REC_contigs.fa
 
 # mv domain hits to current directory
 mv hmm-output/hmm.domtable ./DOMTABLE_${x}.txt
