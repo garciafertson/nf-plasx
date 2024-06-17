@@ -7,7 +7,7 @@ include {anvio_cogpfam} from  "../modules/anvio"
 include {plasx_search_fam} from  "../modules/plasx"
 
 include {plasx_predict} from  "../modules/plasx"
-include {get_fna_plasmids} from  "../modules/plasx"
+include {get_fna_plasmids} from  "../modules/biopython"
 
 include {fna_mashtriangle as fna_mashtriangle_plasmid; fna_mashtriangle as fna_mashtriangle_rec} from  "../modules/mash"
 include {fna_mcl_clust as fna_mcl_clust_plasmid; fna_mcl_clust as fna_mcl_clust_rec} from  "../modules/mcl"
