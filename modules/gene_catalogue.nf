@@ -8,8 +8,8 @@ process cdhit {
   publishDir "arg/catalogue", mode: 'copy'
   
   input:
-    val(name)
-    tuple val(x), path(orfs)
+    val(x)
+    path(orfs)
   output:
     tuple val(x), path("${x}-cdhit.fna"), emit: gene_catalogue
     tuple val(x), path("${x}-cdhit.fna.clstr"), emit: clusters
@@ -17,6 +17,6 @@ process cdhit {
   script:
     """
     cat ${orfs} > all_orfs.fna
-    cd-hit -i all_orgs.fna -o ${name}-cdhit.fna -c 0.95 -n 5 -d 0 -M 8000 -T 4
+    cd-hit -i all_orgs.fna -o ${x}-cdhit.fna -c 0.95 -n 5 -d 0 -M 8000 -T 4
     """
 } 
