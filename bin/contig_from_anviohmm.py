@@ -43,30 +43,30 @@ def main():
         table_out.write("\t".join(["contig", "gene_callers_id", "start", "stop", "length", "e_value", "hmm_name"]) + "\n")
         for record in SeqIO.parse(args.hmm, "fasta"):
             #divide fasta header by "|" character
-            header = record.id.split("|")
+            header = record.description.split("|")
             # get contig name from foutrh element
             contig = header[3].split(":")[1]
             contigs.add(contig)
-            gene=hearder[3] + "|" + header[4]
+            gene=header[3] + "|" + header[4]
             if first:
                 #print record to output file
-                out.write(">" + record.id + "\n" + record.seq + "\n")
+                SeqIO.write(record, out, "fasta")
                 #print table to table output file
-                table_out.write(parse_header(record.id) + "\n")
+                table_out.write(parse_header(record.description) + "\n")
                 prevgene=gene
                 first = False
             else:
+                print(gene, prevgene)
                 if gene != prevgene:
                     #print record to output file
-                    out.write(">" + record.id + "\n" + record.seq + "\n")
-                    prevrecord=record
-                    table_out.write(parse_header(record.id) + "\n")
+                    SeqIO.write(record, out, "fasta")
+                    prevgene=gene
+                    table_out.write(parse_header(record.description) + "\n")
 
     # read contigs fasta file and return conitgs in conitg set
-    with open(args.contigs+ "_recContig.fna" , "r") as out:
-        for record in SeqIO.parse(contig_file, "fasta"):
+    with open(args.output+ "_recContig.fna" , "w") as out:
+        for record in SeqIO.parse(args.contigs, "fasta"):
             if record.id in contigs:
-                out.write(">" + record.id + "\n" + record.seq + "\n")
-
+                SeqIO.write(record, out, "fasta")
 if __name__ == '__main__':
     main()
