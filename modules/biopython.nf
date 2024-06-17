@@ -7,7 +7,6 @@ process get_contig_from_hmm{
 
     input:
         tuple val(x), path(contigs), path(hmm) 
-        path(clust)
     output:
         path("${x}_recContig.fna"), emit: mge_contigs
         path("${x}_rechmm.fna"), emit: mge_orfs
