@@ -84,7 +84,7 @@ workflow PLASX {
     //Build orf hmm_mge table and recover contig names in text file
     //Subset contigs with recombinase hits
     get_contig_from_hmm(mgeorf_contigs)
-    mge_contig = get_contig_from_hmm.out.contig_mge.collect()
+    mge_contig = get_contig_from_hmm.out.mge_contigs.collect()
     mge_contig = tuple("MGEcontigs", mge_contig)
 
     //Get representatives contigs with MGE hits
