@@ -8,7 +8,8 @@ process cdhit {
   publishDir "arg/catalogue", mode: 'copy'
   
   input:
-    tuple val(x), path(orfs)
+    val(x)
+    path(orfs)
   output:
     tuple val(x), path("${x}-cdhit.fna"), emit: gene_catalogue
     tuple val(x), path("${x}-cdhit.fna.clstr"), emit: clusters

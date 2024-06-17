@@ -112,8 +112,7 @@ workflow PLASX {
     deeparg_fna=get_deeparg_fna.out.deepargfna.collect()
     //Combine deeparg and rgi results and build ARG catalogue
     //arg_fna=deeparg_fna.concat(rgi_SNPfna)
-    arg_fna= tuple ("ARGcatalogue", deeparg_fna)
-    cdhit(arg_fna)
+    cdhit("DeepARG", deeparg_fna)
 
   }
   
