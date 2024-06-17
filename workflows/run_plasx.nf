@@ -112,7 +112,7 @@ workflow PLASX {
     deeparg_fna=get_deeparg_fna.out.deepargfna.collect()
     //Combine deeparg and rgi results and build ARG catalogue
     //arg_fna=deeparg_fna.concat(rgi_SNPfna)
-    cdhit("DeepARG", deeparg_fna)
+    cdhit_arg("DeepARG", deeparg_fna)
 
   }
   
@@ -121,8 +121,7 @@ workflow PLASX {
   if(params.run_gene_catalogue) {
     //Build gene catalogue from predicted genes (prodigal) in assembly
     allorfs=orfs.collect()
-    cdhit(allorfs)
-    genecatlg= cdhit.out.fna
+    cdhit("AllGenes" ,allorfs)
     //***** match ARG annotations from deepARG and rgi results in samples to gene catalogue
     //***** or run ARG prediction on gene catalogue
   }
