@@ -79,7 +79,7 @@ workflow PLASX {
     anvio_hmm_mge(anvio_contigdb)
     //Returns fna orfs sequences
     mge_orfs= anvio_hmm_mge.out.rec_orfs
-    mgeorg_contigs= mge_orfs.combine(contigs, by: 0)
+    mgeorf_contigs= mge_orfs.combine(contigs, by: 0)
     //Build orf hmm_mge table and recover contig names in text file
     //Subset contigs with recombinase hits
     get_contig_from_hmm(mgeorf_contigs)
