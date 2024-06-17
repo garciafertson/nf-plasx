@@ -6,7 +6,7 @@ process get_contig_from_hmm{
     time 4.h
 
     input:
-        tuple val(x), path(contigs), path(hmm) 
+        tuple val(x), path(hmm), path(contigs)
     output:
         path("${x}_recContig.fna"), emit: mge_contigs
         path("${x}_rechmm.fna"), emit: mge_orfs
