@@ -1,22 +1,22 @@
-process gene_catalogue {
-  cpus '6'
-  memory '16 GB'
-  time '8h'
+process cdhit {
+  cpus '4'
+  memory '8 GB'
+  time '6h'
   maxForks 40
-  container "sysbiojfgg/anvio_cogpfam:v0.1" 
-  errorStrategy { sleep(Math.pow(2, task.attempt) * 60 as long); return 'retry' }
-  maxRetries 3
+  container "nanozoo/cdhit:4.8.1--c697693
+" errorStrategy { sleep(Math.pow(2, task.attempt) * 60 as long); return 'retry' }
+  maxRetries 2
+  publishDir "arg/catalogue", mode: 'copy'
   
   input:
-    tuple val(x), path(contigs)
+    tuple val(x), path(orfs)
   output:
-    tuple val(x), path("${x}-cogs-and-pfams.txt"), emit: cogspfams
+    tuple val(x), path("${x}-cdhit.fna"), emit: gene_catalogue
+    tuple val(x), path("${x}-cdhit.fna.clstr"), emit: clusters
+
   script:
 
   """
-  anvi-run-ncbi-cogs -T 6 --cog-version COG14 --cog-data-dir /home/COG_2014 -c ${contigs}
-  anvi-run-pfams -T 6 --pfam-data-dir /home/Pfam_v32 -c ${contigs}
-  #Export functions to text file
-  anvi-export-functions --annotation-sources COG14_FUNCTION,Pfam -c ${contigs} -o ${x}-cogs-and-pfams.txt
+  cd-hit -i ${orfs} -o ${x}-cdhit.fna -c 0.95 -n 5 -d 0 -M 8000 -T 4
   """
 } 

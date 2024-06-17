@@ -36,7 +36,7 @@ process plasx_predict{
     container "sysbiojfgg/plasx:v0.1" 
     errorStrategy { sleep(Math.pow(2, task.attempt) * 60 as long); return 'retry' }
     maxRetries 3
-    publishDir params.outdir, mode: 'copy'
+    publishDir "mge/plasx/scores", mode: 'copy'
     
     input:
         tuple val(x), path(cogs), path(fams), path(genecalls)
@@ -58,23 +58,3 @@ process plasx_predict{
     """
 }
 
-process get_fna_plasmids{
-  cpus '1'
-  memory '8 GB'
-  time '1h'
-  //maxForks 4
-  container "biopython/biopython"
-  //errorStrategy { sleep(Math.pow(2, task.attempt) * 60 as long); return 'retry' }
-  maxRetries 2
-  
-  input:
-    tuple val(x), path(contigfna) , path(plasmidscores)
-  output:
-    path("${x}_predicted_plasmids.fna"), emit: plasmidsfna
-  script:
-  """
-  get_plasmid_fna.py --contigs ${contigfna} \\
-  --plasmids ${plasmidscores} \\
-  --output ${x}_predicted_plasmids.fna
-  """
-}

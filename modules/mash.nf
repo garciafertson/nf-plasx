@@ -5,22 +5,22 @@ process fna_mashtriangle{
   cpus 10
   time 24.h
   memory "32 GB"
-  publishDir "plasx_prediction/mash_distances", mode: "copy"
+  publishDir "mge/catalogue/mashdistance", mode: "copy"
 
   input:
-    path(fna)
+    tuple val(x), path(fna)
   output:
-    path("allplasmids.fna"), emit: allplasmids
-    path("plasmids.edgelist"), emit: edgelist
-    path("plasmid_0.05.list"), emit: list05
+    path("${x}_allplasmids.fna"), emit: allplasmids
+    tuple val(x), path("${x}_plasmids.edgelist"), emit: edgelist
+    tuple val(x), path("${x}_plasmid_0.05.list"), emit: list05
   script:
     """
     #concatenate plasmids
-    cat *_predicted_plasmids.fna > allplasmids.fna
+    cat *_predicted_plasmids.fna > ${x}_allplasmids.fna
 
     mash triangle -p 10 \\
-    -i -E allplasmids.fna -k 19 > plasmids.edgelist
+    -i -E ${x}_allplasmids.fna -k 19 > ${x}_plasmids.edgelist
 
-    awk '{if (\$3 < $params.mashdistance) print \$1,\$2,\$3}' plasmids.edgelist > plasmid_0.05.list
+    awk '{if (\$3 < $params.mashdistance) print \$1,\$2,\$3}' ${x}_plasmids.edgelist > ${x}_plasmid_0.05.list
     """
 }

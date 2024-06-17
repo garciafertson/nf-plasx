@@ -68,7 +68,7 @@ containerOptions "--bind ${projectDir}/hmm_rec:${projectDir}/hmm_rec"
 
 output:
 tuple val(x), path("${x}_DOMTABLE.txt"), emit: hmm
-tuple val(x), path("${x}_hmmrec.fa"), emit: contig_fna
+tuple val(x), path("${x}_hmmrec.fa"), emit: rec_orfs
 
 script:
 """
@@ -83,16 +83,6 @@ anvi-run-hmms -c ${x}_hmm.db \\
 anvi-get-sequences-for-hmm-hits -c ${x}_hmm.db \\
                     --hmm-source hmm_rec \\
                     -o ${x}_hmmrec.fa
-
-# Filter HMM hits
-#anvi-script-filter-hmm-hits-table -c ${x}_hmm.db \\
-#                  --hmm-profile-dir ${projectDir}/hmm_rec \\
-#                  --hmm-source  hmm_rec\\
-#                  --domain-hits-table hmm-output/hmm.domtable \\
-#                  --model-coverage 0.85
-# Get fasta sequences of contigs hits
-#anvi-export-contigs -c ${x}_hmm.db \\
-#                    -o ${x}_REC_contigs.fa
 
 # mv domain hits to current directory
 mv hmm-output/hmm.domtable ./${x}_DOMTABLE.txt
