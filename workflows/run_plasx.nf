@@ -98,13 +98,12 @@ workflow PLASX {
   //retrieve annotation as contig and list of detected CARD genes
   //ANNOTATE CONTIGS WHERE ARGs ARE DETECTED
   if (params.run_ARG_prediction) {
-    rgi_card_sample(contigs)
+    rgi_card_sample(orfs)
     // **** get rgi fasta sequence of SNIP hits and build ARG annotation table
     /*rgi_result = rgi_card_sample.out.rgi_fna
     rgi_getSNPseqs(rgi_result)
     rgi_SNPfna= rgi_getSNPseqs.out.rgi_SNPfna.collect()
     */
-
     deep_arg_sample(orfs)
     deepARG = deep_arg_sample.out.deeparg
     arg_orf= deepARG.combine(orfs, by: 0)
