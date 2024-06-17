@@ -17,6 +17,6 @@ process cdhit {
   script:
     """
     cat ${orfs} > all_orfs.fna
-    cd-hit -i all_orgs.fna -o ${x}-cdhit.fna -c 0.95 -n 5 -d 0 -M 8000 -T 4
+    cd-hit -i all_orfs.fna -o ${x}-cdhit.fna -c 0.95 -n 5 -d 0 -M 8000 -T 4
     """
 } 
