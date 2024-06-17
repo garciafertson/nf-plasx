@@ -61,7 +61,7 @@ workflow PLASX {
     contig_plasmidscore=contigs.combine(plasmidsscores, by: 0)
     get_fna_plasmids(contig_plasmidscore)
     plasmidsfna = get_fna_plasmids.out.plasmidsfna.collect()
-    plasmid_contigs= tuple("PlasXcontigs", plasmidsfna)
+    def plasmid_contigs = new Tuple("PlasXcontigs", plasmidsfna)
     // Dereplicate plasmids using mash, 
     fna_mashtriangle_plasmid(plasmidsfna)
     distances = fna_mashtriangle_plasmid.out.list05
@@ -85,7 +85,7 @@ workflow PLASX {
     //Subset contigs with recombinase hits
     get_contig_from_hmm(mgeorf_contigs)
     mge_contig = get_contig_from_hmm.out.mge_contigs.collect()
-    mge_contig = tuple("MGEcontigs", mge_contig)
+    def mge_contig = new Tuple("MGEcontigs", mge_contig)
 
     //Get representatives contigs with MGE hits
     fna_mashtriangle_rec(mge_contig)
