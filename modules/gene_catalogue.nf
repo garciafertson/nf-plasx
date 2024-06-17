@@ -4,7 +4,8 @@ process cdhit {
   time '6h'
   maxForks 40
   container "nanozoo/cdhit:4.8.1--c697693"
-  errorStrategy { sleep(Math.pow(2, task.attempt) * 60 as long); return 'retry' }
+  //errorStrategy { sleep(Math.pow(2, task.attempt) * 60 as long); return 'retry' }
+  errorStrategy 'retry'
   maxRetries 2
   publishDir "arg/catalogue", mode: 'copy'
   
