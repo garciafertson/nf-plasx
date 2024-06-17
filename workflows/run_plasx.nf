@@ -15,7 +15,7 @@ include {fna_get_rep as fna_get_rep_plasmid; fna_get_rep as fna_get_rep_rec} fro
 
 include {rgi_card as rgi_card_sample} from  "../modules/arg"
 include {deep_arg as deep_arg_sample; deep_arg as deep_arg_catalogue} from  "../modules/arg"
-include {get_deeparg_fna} from  "../modules/biopython"
+include {get_deeparg_fna} from  "../modules/arg"
 
 include {cdhit as cdhit; cdhit as cdhit_arg} from  "../modules/gene_catalogue"
 include {anvio_hmm_mge} from  "../modules/anvio"
