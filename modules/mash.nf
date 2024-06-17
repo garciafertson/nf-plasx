@@ -17,7 +17,7 @@ process fna_mashtriangle{
   script:
     """
     #concatenate plasmids
-    cat *_predicted_plasmids.fna > ${x}_allplasmids.fna
+    cat *.fna > ${x}_allplasmids.fna
 
     mash triangle -p 10 \\
     -i -E ${x}_allplasmids.fna -k 19 > ${x}_plasmids.edgelist
