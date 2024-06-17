@@ -6,7 +6,7 @@ process rgi_card {
   container "quay.io/biocontainers/rgi:6.0.3--pyha8f3691_0"
   //errorStrategy { sleep(Math.pow(2, task.attempt) * 60 as long); return 'retry' }
   maxRetries 3
-  publishDir "arg/rgi/table_seqs", mode: 'copy'
+  publishDir "${params.outdir}/arg/rgi/table_seqs", mode: 'copy'
   
   input:
     tuple val(x), path(contigs)
@@ -33,7 +33,7 @@ process deep_arg{
     containerOptions "--bind ${params.deeparg_db},${params.user_home}"
     //container "quay.io/biocontainers/deepargls:1.0--py_0" 
     maxRetries 3
-    publishDir "arg/deeparg/table", mode: 'copy'
+    publishDir "${params.outdir}/arg/deeparg/table", mode: 'copy'
     
     input:
       tuple val(x),  path(orfs)
@@ -64,7 +64,7 @@ process get_deeparg_fna{
     container "sysbiojfgg/anvio_cogpfam:v0.1"
     containerOptions "--bind ${params.deeparg_db},${params.user_home}"
     maxRetries 3
-    publishDir "arg/deeparg/sequences", mode: 'copy'
+    publishDir "${params.outdir}/arg/deeparg/sequences", mode: 'copy'
     
     input:
       tuple val(x),  path(deeparg_table), path(orfs)

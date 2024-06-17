@@ -1,6 +1,6 @@
 process get_contig_from_hmm{
     //directives
-    publishDir "mge/hmmprediction/table_seqs", mode: 'copy'
+    publishDir "${params.outdir}/mge/hmmprediction/table_seqs", mode: 'copy'
     container "biopython/biopython"
     cpus 1
     time 4.h
@@ -26,16 +26,16 @@ process get_fna_plasmids{
   container "biopython/biopython"
   //errorStrategy { sleep(Math.pow(2, task.attempt) * 60 as long); return 'retry' }
   maxRetries 2
-  publishDir "mge/plasx/plasmid_seqs", mode: 'copy'
+  publishDir "${params.outdir}/mge/plasx/sequences", mode: 'copy'
   
   input:
     tuple val(x), path(contigfna) , path(plasmidscores)
   output:
-    path("${x}_predicted_plasmids.fna"), emit: plasmidsfna
+    path("${x}_plasx.fna"), emit: plasmidsfna
   script:
   """
   get_plasmid_fna.py --contigs ${contigfna} \\
   --plasmids ${plasmidscores} \\
-  --output ${x}_predicted_plasmids.fna
+  --output ${x}_plasx.fna
   """
 }

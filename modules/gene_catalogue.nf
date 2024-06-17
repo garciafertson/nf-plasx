@@ -5,7 +5,7 @@ process cdhit {
   maxForks 40
   container "nanozoo/cdhit:4.8.1--c697693"
   //errorStrategy { sleep(Math.pow(2, task.attempt) * 60 as long); return 'retry' }
-  publishDir "arg/catalogue", mode: 'copy'
+  publishDir "${params.outdir}/arg/catalogue", mode: 'copy'
   
   input:
     val(x)

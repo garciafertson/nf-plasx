@@ -2,7 +2,7 @@ process fna_mcl_clust{
   //directives
   //module "mcl"
   container "sysbiojfgg/mcl:v0.1"
-  publishDir "mge/catalogue/mcl_clusters", mode: 'copy'
+  publishDir "${params.outdir}/mge/catalogue/mcl_clusters", mode: 'copy'
   cpus 4
   memory "4 GB"
   time 5.h
@@ -24,22 +24,22 @@ process fna_mcl_clust{
 
 process fna_get_rep{
   //directives
-  publishDir "mge/catalogue/", mode: 'copy'
   container "biopython/biopython"
   memory "4 GB"
   cpus 1
   time 4.h
+  publishDir "${params.outdir}/mge/catalogue/", mode: 'copy'
 
   input:
     path(fna)
     tuple val(x), path(clust)
   output:
-    path("${x}_reprContigs.fna"), emit: representatives
+    path("${x}_repr.fna"), emit: representatives
   script:
     """
     get_representatives.py  --plasmids ${fna}  \\
                 --clusters  ${clust}
-    mv representative_plasmids.fna ${x}_reprContigs.fna 
+    mv representative_plasmids.fna ${x}_repr.fna 
     """
 }
 

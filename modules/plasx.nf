@@ -36,7 +36,7 @@ process plasx_predict{
     container "sysbiojfgg/plasx:v0.1" 
     errorStrategy { sleep(Math.pow(2, task.attempt) * 60 as long); return 'retry' }
     maxRetries 3
-    publishDir "mge/plasx/scores", mode: 'copy'
+    publishDir "${params.outdir}/mge/plasx/scores", mode: 'copy'
     
     input:
         tuple val(x), path(cogs), path(fams), path(genecalls)

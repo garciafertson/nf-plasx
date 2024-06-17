@@ -40,12 +40,12 @@ workflow PLASX {
     ///////////////////////////////////
     ///////PLASMID PREDICTION
     ///////////////////////////////////
-    // Use PlasX to search for search for de nove gene families
-    plasx_search_fam(genecalls)
-    plasxfams=plasx_search_fam.out.fams
     //Predict COGS and Pfam v32
     anvio_cogpfam(anvio_contigdb)
     cogspfams = anvio_cogpfam.out.cogspfams
+    // Use PlasX to search for search for de nove gene families
+    plasx_search_fam(genecalls)
+    plasxfams=plasx_search_fam.out.fams
     //Combine channels anvio_cogs_and_pfams, plasx_search_fams, and anvio_gene_calls by key
     cog_plasx= cogspfams.combine(plasxfams, by: 0)
     // .map { id, cog, plasxfam -> [cog, plasxfam] }
