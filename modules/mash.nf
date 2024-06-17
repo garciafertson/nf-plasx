@@ -8,7 +8,8 @@ process fna_mashtriangle{
   publishDir "mge/catalogue/mashdistance", mode: "copy"
 
   input:
-    tuple val(x), path(fna)
+    val(x)
+    path(fna)
   output:
     path("${x}_allplasmids.fna"), emit: allplasmids
     tuple val(x), path("${x}_plasmids.edgelist"), emit: edgelist
