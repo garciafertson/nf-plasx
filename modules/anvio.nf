@@ -65,6 +65,9 @@ input:
 tuple val(x), path(contigsdb)
 container "sysbiojfgg/anvio_cogpfam:v0.1"
 containerOptions "--bind ${projectDir}/hmm_rec:${projectDir}/hmm_rec"
+errorStrategy = { task.exitStatus == 255 ? 'ignore' : 'retry' }
+maxRetries = 2
+//errorStrategy = { task.exitStatus in [143,137,104,134,139] ? 'retry' : task.exitStatus == 255 ? 'ignore' : 'finish' }
 
 output:
 tuple val(x), path("${x}_DOMTABLE.txt"), emit: hmm
