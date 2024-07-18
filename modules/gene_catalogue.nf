@@ -1,6 +1,6 @@
 process cdhit {
-  cpus '4'
-  memory '8 GB'
+  cpus '6'
+  memory '48 GB'
   time '6h'
   maxForks 40
   container "nanozoo/cdhit:4.8.1--c697693"
@@ -17,6 +17,6 @@ process cdhit {
   script:
     """
     cat ${orfs} > all_orfs.fna
-    cd-hit -i all_orfs.fna -o ${x}-cdhit.fna -c 0.95 -n 5 -d 0 -M 8000 -T 4
+    cd-hit-est -i all_orfs.fna -o ${x}-cdhit.fna -c 0.95 -n 5 -d 0 -M 48000 -T 6
     """
 } 
