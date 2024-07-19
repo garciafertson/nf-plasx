@@ -4,7 +4,7 @@ process fna_mashtriangle{
   container "staphb/mash:2.3"
   cpus 10
   time 24.h
-  memory "32 GB"
+  memory "40 GB"
   publishDir "${params.outdir}/mge/catalogue/mashdistance", mode: "copy"
 
   input:
@@ -19,7 +19,7 @@ process fna_mashtriangle{
     #concatenate plasmids
     cat *.fna > ${x}_all.fna
 
-    mash triangle -p 10 \\
+    mash triangle -p 10 -d 0.5 \\
     -i -E ${x}_all.fna -k 19 > ${x}_all.edgelist
 
     awk '{if (\$3 < $params.mashdistance) print \$1,\$2,\$3}' ${x}_all.edgelist > ${x}_0.05.list
